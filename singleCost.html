@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/f202766429.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Payment</title>
+    <style>
+        body{
+            background: #E5E5E5;
+        }
+        
+        .radio-button{
+            position:absolute;
+            border-radius:25px;
+            height:50%;
+            width:10%;
+            border:1px solid #888888;
+            top:11%;
+            left:10%;
+        }
+        .radio-button:hover{
+            cursor:pointer;
+        }
+       
+        .car{
+           position:relative;
+           width:35%;
+           background: #FFFFFF;
+           border: 1px solid #B8B8B8;
+           box-sizing: border-box;
+           height: 30px;
+           border-radius: 4px; 
+           margin-right:20px;
+        }
+        #event-type{
+            width:30%;
+            height:300px;
+            box-shadow: 0px 8px 50px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            background: #ffffff;
+            margin:100px auto;
+            padding: 0;
+        }
+        #event-type h1{
+            width:100%;
+            box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+            border-radius: 8px 8px 0px 0px;
+            margin:0;
+            padding: 0;
+            font-family: IBM Plex Sans;
+            font-style: normal;
+            font-weight: 600px;
+            font-size: 20px;
+            line-height: 39px;
+        }
+        #footer{
+            border-top: 1px solid #EBEBEB;
+            width:100%;
+            height:70px;
+            display:flex;
+            justify-content: flex-end;
+            padding: 0;
+        }
+        #footer button{
+            color: white;
+            background: #16B867;
+            border-radius: 4px;
+            margin:5px 20px;
+            border-style: none;
+            padding:1px 10px;
+            height:32px;
+            text-align: center;
+        }
+        #footer button:hover{
+            cursor:not-allowed;
+        }
+        #container{
+            width:75%;
+            margin:40px auto;
+        }
+        #card-container{
+            display:flex;
+        }
+        .type{
+            font-family: IBM Plex Sans;
+            position: absolute;
+            font-size: 12px;
+            bottom:-17%;left:35%;
+        }
+        .fa-arrow-left{
+            font-size: 15px;
+            margin:0 15px;
+        }
+        .card:hover{
+            background: #F5F8FC;
+            border:1px solid #2F6CE5;
+            cursor: pointer;
+        }
+        #menu-a{
+            color:black;
+        }
+        #price-ticket{
+            display: flex;
+            height:25px;
+            background: rgba(229, 229, 229, 0.589);
+            width:45%;
+            border-radius: 4px ;
+        }
+        #price-ticket select{
+            height:25px;
+            background: #E5E5E5;
+            border-radius:4px 0 0 4px;
+            border:none;
+            margin:0;
+        }
+        #price-ticket input{
+            margin:0;
+            padding: 0 10px;
+            border:none;
+            font-size:12px;
+            height:25px;
+            width:80%;
+            border-radius:0 4px 4px 0 ;
+            background: rgba(229, 229, 229, 0);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="event-type">
+        <h1>
+                <a id="menu-a" href="eventType.html"><i class="fas fa-arrow-left"></i></a>
+             Price & Availability
+        </h1>
+        <div id="container">
+            <p>
+            Price of tickets?
+            </p>
+            <p id="price-ticket">
+                <select name="" id="">
+                    <option value="">₹</option>
+                    <option value="">$</option>
+                    <option value="">₦</option>
+                    <option value="">₤</option>
+                    <option value="">¥</option>
+                </select>
+                <input id="in" type="text" placeholder="Price per ticket">
+            </p>
+            <p>
+                Availability?
+            </p>
+            <div id ='card-container'>
+                    <div class="car" id="online">
+                        <input class="radio-button" name="payment-choice" type="radio">
+                        <p class="type">Online</p>
+                    </div>
+                    <div class="car" id="offline">
+                        <input class="radio-button" name="payment-choice" type="radio">
+                        <p class="type">Offline</p>
+                    </div>
+            </div>
+        </div>
+            
+            <footer id='footer'>
+                <a id="navigate" href="#">
+                    <button type="button"class='button' disabled><b>Done   👌 </b></button>
+                </a>
+                
+            </footer>
+    </div>
+    <script>
+            
+            $('.card').click(function(){
+                $(this).find('.radio-button').prop('checked', true);
+                if($('#in').val()!='' && $('.radio-button').prop('checked',true)){
+                $('.button').css('cursor','pointer');
+            }
+            })
+            
+        </script>
+</body>
+</html>
