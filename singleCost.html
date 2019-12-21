@@ -146,7 +146,7 @@
     </style>
 </head>
 <body>
-    <div id="event-type">
+    <form action="eventRegistered.html" id="event-type">
         <h1>
                 <a id="menu-a" href="eventType.html"><i class="fas fa-arrow-left"></i></a>
              Price & Availability
@@ -163,14 +163,14 @@
                     <option value="">₤</option>
                     <option value="">¥</option>
                 </select>
-                <input id="in" type="text" placeholder="Price per ticket">
+                <input id="in" type="number" placeholder="Price per ticket" required>
             </p>
             <p>
                 Availability?
             </p>
             <div id ='card-container'>
                     <div class="car" id="online">
-                        <input class="radio-button" name="payment-choice" type="radio">
+                        <input class="radio-button" name="payment-choice" type="radio" required>
                         <p class="type">Online</p>
                     </div>
                     <div class="car" id="offline">
@@ -182,18 +182,17 @@
             
             <footer id='footer'>
                 <a id="navigate" href="#">
-                    <button type="button"class='button' disabled><b>Done   👌 </b></button>
+                    <button type="submit"class='button' ><b>Done   👌 </b></button>
                 </a>
                 
             </footer>
-    </div>
+        </form>
     <script>
             
-            $('.card').click(function(){
-                $(this).find('.radio-button').prop('checked', true);
-                if($('#in').val()!='' && $('.radio-button').prop('checked',true)){
-                $('.button').css('cursor','pointer');
-            }
+            
+            $('.car').click(function(){
+                $(this).find('.radio-button').prop('checked', true)
+                $('.button').css('cursor', 'pointer');
             })
             
         </script>
