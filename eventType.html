@@ -103,7 +103,7 @@
         #footer{
             border-top: 1px solid #EBEBEB;
             width:100%;
-            height:70px;
+            height:40px;
             display:flex;
             justify-content: flex-end;
             padding: 0;
@@ -149,7 +149,12 @@
         @media only screen and (max-width: 375px){
             #event-type{
                 width:90%;
+                height:auto;
             }
+            .card{
+                width:40%;
+            }
+            
         }
     </style>
 </head>
@@ -182,7 +187,7 @@
                                         </div>
                                 </div>
                                 
-                                <p class="type">
+                                <p class="type" id='multiple'>
                                     MULTIPLE COST
                                 </p>
                             </div>
