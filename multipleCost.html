@@ -142,10 +142,16 @@
         }
         #limenu{
             display:flex;
+            flex-direction: row;
             justify-content: space-between;
             margin:0 10px;
+            z-index:0;
+            background:yellow;
         }
+      
         li{
+            background:blue;
+            z-index: 400;
             border-bottom: 1px solid #EBEBEB;
             margin-top:10px;
         }
@@ -207,15 +213,15 @@
             if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
                 $('#storeTickets').append(`<li>
                 <p id='limenu'>
-                    <p>
+                    <span>
                         ${$('#category').val()}:${$('#currency').val()}${$('#price').val()}
-                    </p>
-                    <span id='up'>
+                    </span>
+                    <sup id='up'>
                         <i class="fas fa-chevron-up ar"></i>
-                    </span>
-                    <span id='down'>
+                    </sup>
+                    <sup id='down'>
                         <i class="fas ar fa-chevron-down"></i>
-                    </span>
+                    </sup>
                 </p>
                 <div class='content'id="container">
                 <p>Category?</p>
@@ -253,9 +259,9 @@
             //  }
             console.log($(e.target))
             console.log($(e.target.className))
-            $(e.target).find('span').toggle();
+            $(e.target).find('sup').toggle();
             // $('.fa-chevron-up').show();
-            $('.content').show()
+            $(e.target).find('.content').toggle()
         })
     </script>
 </body>
