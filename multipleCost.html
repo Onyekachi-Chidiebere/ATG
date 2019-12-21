@@ -42,7 +42,7 @@
             width:100%;
             height:45px;
             display:flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             padding: 0;
         }
         #footer button{
@@ -53,7 +53,11 @@
             border-style: none;
             padding:1px 10px;
             height:32px;
+            width:70%;
             text-align: center;
+        }
+        #footer input{
+            
         }
         #footer button:hover{
             cursor:not-allowed;
@@ -141,28 +145,51 @@
             display:none;
         }
         #limenu{
-            position:absolute;
             display:flex;
-            flex-direction: row;
             justify-content: space-between;
+            position: relative;
             margin:0 10px;
-            z-index:0;
-            background:yellow;
+        }
+        #cat-remove{
+            display:flex;
+            justify-content: space-between;
+            margin-right:20px;
+            margin-top:20px;
+        }
+        #limenu span{
+            width:93%;
         }
       
         li{
-            background:blue;
-            position:relative;
-            z-index: 1;
             border-bottom: 1px solid #EBEBEB;
             margin-top:10px;
         }
         .fa-chevron-up,.fa-chevron-down{
+            position:relative;
             border: 1px solid rgb(41, 40, 40);
         }
-        #up {
+        .ar:hover{
+            cursor: pointer;
+        }
+        .fa-chevron-up {
             display:none;
             
+        }
+        #amount{
+            display: flex;
+            font-size:15px;
+            background:white;
+            width:60%;
+            margin-left:20px;
+        }
+        #amount input{
+            background:rgba(255, 255, 255, 0);
+            font-size:17px;
+        }
+        #crr{
+            width:7%;
+        }
+        #amt{width:50%;
         }
         @media only screen and (max-width: 460px){
             #event-type{
@@ -191,7 +218,6 @@
              <button id="menu-b"> + Category</button>
         </h1>
         <ol id="storeTickets"></ol>
-        <p id="number">1.</p>
         <div id="container">
             <p>Category?</p>
             <p><input type="text" id="category" placeholder='Example: Entry, food, or parking etc.' required>
@@ -218,6 +244,7 @@
         </div>
             
             <footer id='footer'>
+                <p type="text" id="amount"  >Total Cost: <input type="text"value='₹' id="crr"> <input type="text" id='amt' value="000000"></p>
                 <a id="navigate" href="#">
                     <button type="submit"class='button' ><b>Done   👌 </b></button>
                 </a>
@@ -225,22 +252,32 @@
             </footer>
         </form>
     <script>
+        
         $('.button').click(function(e){
+            
             if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
+                // let amount = 
+                // console.log(amount);
+                $('#amt').val(`${parseInt($('#amt').val())+parseInt($('#price').val())}`);
+                $('#crr').val(`${$('#currency').val()}`)
+                $('#container').hide()
                 $('#storeTickets').append(`<li>
                 <p id='limenu'>
                     <span>
                         ${$('#category').val()}:${$('#currency').val()}${$('#price').val()}
                     </span>
-                    <sup id='up'>
+                    
                         <i class="fas fa-chevron-up ar"></i>
-                    </sup>
-                    <sup id='down'>
+                   
+                    
                         <i class="fas ar fa-chevron-down"></i>
-                    </sup>
+                    
                 </p>
-                <div class='content'id="container">
-                <p>Category?</p>
+                <div class='content'id="contain">
+                <p id='cat-remove'>
+                    <sup>Category?</sup>
+                    <sub name='remove' class="fas fa-minus-circle">   remove</sub>
+                </p>
                 <p>
                     <input type="text" value='${$('#category').val()}'>
                 </p>
@@ -248,7 +285,7 @@
                     Description
                 </p>
                 <p>
-                    <input id="description" type="text" value='${$('#description').val()}'>
+                    <input type="text" value='${$('#description').val()}'>
                 </p>
                 <p>
                 Ticket price for this category?
@@ -261,24 +298,40 @@
                         <option value="₤">₤</option>
                         <option value="¥">¥</option>
                     </select>
-                    <input type="text" value='${$('#price').val()}'>
+                    <input type="text" id='added-price' value='${$('#price').val()}'>
                 </p>
             </div>
         </li>`) 
-        }
-            })
+        } 
+                 
+        })
            
          $('ol').on('click',function(e){
-            //  var targt = $(e.target)
-            //  if($(targt.is('span'))){
-            //      $(e.target).toggle();
-            //  }
-            console.log($(e.target))
-            console.log($(e.target.className))
-            $(e.target).find('sup').toggle();
-            // $('.fa-chevron-up').show();
-            $(e.target).find('.content').toggle()
+            console.log($(e.target).attr('name'),'this is the tag name')
+            $(e.target.parentElement.parentElement).find('.fa-chevron-up').toggle();
+            $(e.target.parentElement.parentElement).find('.fa-chevron-down').toggle();
+            $(e.target.parentElement.parentElement).find('.content').toggle()
         })
+        $('#menu-b').on('click',function(e){
+                e.preventDefault();
+                $('#description').val('');
+                $('#category').val('');
+                $('#price').val(''); 
+                $('#container').show();
+            })
+
+        $('ol').on('click',function(e){
+             var targt = $(e.target)
+             if($(targt).attr('name')=='remove'){
+                 console.log('na em be this',);
+                 let can = $(e.target.parentElement.parentElement.parentElement)
+                //  can.remove();
+                 let canPrice = can.find($('#added-price')).val();
+                //  $('#amt').val(`${parseInt(can.find($('#added-price')).val())- parseInt($('#amt').val())}`);
+                console.log(canPrice, 'na price be this')
+                console.log($('#amt').val(`${parseInt($('#amt').val())- parseInt(can.find($('#added-price')).val())}`), 'na new price be this')
+             }
+        })    
     </script>
 </body>
 </html>
