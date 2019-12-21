@@ -152,7 +152,7 @@
         .fa-chevron-up,.fa-chevron-down{
             border: 1px solid rgb(41, 40, 40);
         }
-        .fa-chevron-up {
+        #up {
             display:none;
             
         }
@@ -160,7 +160,7 @@
     </style>
 </head>
 <body>
-    <div id="event-type">
+    <form id="event-type">
         <h1>
              <p>
                 <a id="menu-a" href="eventType.html"><i class="fas fa-arrow-left"></i></a>
@@ -172,13 +172,13 @@
         <p id="number">1.</p>
         <div id="container">
             <p>Category?</p>
-            <p><input type="text" id="category" placeholder='Example: Entry, food, or parking etc.'>
+            <p><input type="text" id="category" placeholder='Example: Entry, food, or parking etc.' required>
             </p>
             <p>
                 Description
             </p>
             <p>
-                <input id="description" type="text" placeholder="Description">
+                <input id="description" type="text" placeholder="Description" required>
             </p>
             <p>
             Ticket price for this category?
@@ -191,56 +191,71 @@
                     <option value="₤">₤</option>
                     <option value="¥">¥</option>
                 </select>
-                <input type="text" id="price" placeholder="Price per ticket">
+                <input type="text" id="price" placeholder="Price per ticket" required>
             </p>
         </div>
             
             <footer id='footer'>
                 <a id="navigate" href="#">
-                    <button type="button"class='button' ><b>Done   👌 </b></button>
+                    <button type="submit"class='button' ><b>Done   👌 </b></button>
                 </a>
                 
             </footer>
-    </div>
+        </form>
     <script>
-        $('.button').click(function(){
-           $('#storeTickets').append(`<li><p id='limenu'><span>${$('#category').val()}:${$('#currency').val()}${$('#price').val()}</span><span '><i class="fas fa-chevron-up ar"></i><i class="fas ar fa-chevron-down"></i></span></p><div class='content'id="container">
-            <p>Category?</p>
-            <p>
-                <input type="text" value='${$('#category').val()}'>
-            </p>
-            <p>
-                Description
-            </p>
-            <p>
-                <input id="description" type="text" value='${$('#description').val()}'>
-            </p>
-            <p>
-            Ticket price for this category?
-            </p>
-            <p id="price-ticket">
-                <select name="" value='${$('#currency').val()}'>
-                    <option value="₹">₹</option>
-                    <option value="$">$</option>
-                    <option value="₦">₦</option>
-                    <option value="₤">₤</option>
-                    <option value="¥">¥</option>
-                </select>
-                <input type="text" value='${$('#price').val()}'>
-            </p>
-        </div></li>`) 
-        })
+        $('.button').click(function(e){
+            if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
+                $('#storeTickets').append(`<li>
+                <p id='limenu'>
+                    <p>
+                        ${$('#category').val()}:${$('#currency').val()}${$('#price').val()}
+                    </p>
+                    <span id='up'>
+                        <i class="fas fa-chevron-up ar"></i>
+                    </span>
+                    <span id='down'>
+                        <i class="fas ar fa-chevron-down"></i>
+                    </span>
+                </p>
+                <div class='content'id="container">
+                <p>Category?</p>
+                <p>
+                    <input type="text" value='${$('#category').val()}'>
+                </p>
+                <p>
+                    Description
+                </p>
+                <p>
+                    <input id="description" type="text" value='${$('#description').val()}'>
+                </p>
+                <p>
+                Ticket price for this category?
+                </p>
+                <p id="price-ticket">
+                    <select name="" value='${$('#currency').val()}'>
+                        <option value="₹">₹</option>
+                        <option value="$">$</option>
+                        <option value="₦">₦</option>
+                        <option value="₤">₤</option>
+                        <option value="¥">¥</option>
+                    </select>
+                    <input type="text" value='${$('#price').val()}'>
+                </p>
+            </div>
+        </li>`) 
+        }
+            })
+           
          $('ol').on('click',function(e){
-             var targt = $(e.target)
-             if($(targt.is('i'))){
-                 $(e.target).toggle();
-             }
+            //  var targt = $(e.target)
+            //  if($(targt.is('span'))){
+            //      $(e.target).toggle();
+            //  }
             console.log($(e.target))
-            // console.log($(e.target.className))
-            // $(e.target).find('i').toggle();
-            // $(e.target).find('.fa-chevron-up').toggle();
+            console.log($(e.target.className))
+            $(e.target).find('span').toggle();
             // $('.fa-chevron-up').show();
-            // $('.content').show()
+            $('.content').show()
         })
     </script>
 </body>
