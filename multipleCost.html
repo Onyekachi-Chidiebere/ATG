@@ -164,9 +164,19 @@
             display:none;
             
         }
-        @media only screen and (max-width: 375px){
+        @media only screen and (max-width: 460px){
             #event-type{
                 width:90%;
+                height: auto;
+            }
+        }
+        @media only screen and (orientation: landscape){
+            #event-type{
+                width:60%;
+                height:auto;
+            }
+            .card{
+                width:35%;
             }
         }
     </style>
