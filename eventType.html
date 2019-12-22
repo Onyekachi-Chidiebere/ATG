@@ -146,16 +146,13 @@
         #menu-a{
             color:black;
         }
-        @media only screen and (max-width: 460px){
+        @media (min-width: 200px) and (max-width: 460px){
             #event-type{
                 width:90%;
                 height: auto;
             }
-            .card{
-                width:45%;
-            }
         }
-        @media only screen and (orientation: landscape){
+        @media(min-width:461px) and (max-width:1000px) {
             #event-type{
                 width:60%;
                 height:auto;
@@ -163,7 +160,6 @@
             .card{
                 width:35%;
             }
-            
         }
     </style>
 </head>
