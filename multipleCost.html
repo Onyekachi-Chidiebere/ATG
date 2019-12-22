@@ -209,7 +209,7 @@
     </style>
 </head>
 <body>
-    <form id="event-type">
+    <form action="eventRegistered.html" id="event-type">
         <h1>
              <p>
                 <a id="menu-a" href="eventType.html"><i class="fas fa-arrow-left"></i></a>
@@ -244,8 +244,8 @@
         </div>
             
             <footer id='footer'>
-                <p type="text" id="amount"  >Total Cost: <input type="text"value='₹' id="crr"> <input type="text" id='amt' value="000000"></p>
-                <a id="navigate" href="#">
+                <p type="text" id="amount"  >Total Cost: <input type="text"value='₹' id="crr"> <input type="text" id='amt' value="0"></p>
+                <a id="navigate" href="">
                     <button type="submit"class='button' ><b>Done   👌 </b></button>
                 </a>
                 
@@ -253,24 +253,31 @@
         </form>
     <script>
         
-        $('.button').click(function(e){
-            
-            if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
-                // let amount = 
-                // console.log(amount);
+         $('ol').on('click',function(e){
+            if($(e.target).attr('name')=='ar'){ 
+            console.log($(e.target).attr('name'),'this is the tag name')
+            $(e.target.parentElement.parentElement).find('.fa-chevron-up').toggle();
+            $(e.target.parentElement.parentElement).find('.fa-chevron-down').toggle();
+            $(e.target.parentElement.parentElement).find('.content').toggle()}
+        })
+
+
+        $('#menu-b').on('click',function(e){
+                e.preventDefault();
+
+                if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
                 $('#amt').val(`${parseInt($('#amt').val())+parseInt($('#price').val())}`);
                 $('#crr').val(`${$('#currency').val()}`)
-                $('#container').hide()
                 $('#storeTickets').append(`<li>
                 <p id='limenu'>
                     <span>
                         ${$('#category').val()}:${$('#currency').val()}${$('#price').val()}
                     </span>
                     
-                        <i class="fas fa-chevron-up ar"></i>
+                        <i class="fas fa-chevron-up ar" name='ar'></i>
                    
                     
-                        <i class="fas ar fa-chevron-down"></i>
+                        <i class="fas ar fa-chevron-down" name='ar'></i>
                     
                 </p>
                 <div class='content'id="contain">
@@ -303,29 +310,20 @@
             </div>
         </li>`) 
         } 
-                 
-        })
-           
-         $('ol').on('click',function(e){
-            console.log($(e.target).attr('name'),'this is the tag name')
-            $(e.target.parentElement.parentElement).find('.fa-chevron-up').toggle();
-            $(e.target.parentElement.parentElement).find('.fa-chevron-down').toggle();
-            $(e.target.parentElement.parentElement).find('.content').toggle()
-        })
-        $('#menu-b').on('click',function(e){
-                e.preventDefault();
+
                 $('#description').val('');
                 $('#category').val('');
                 $('#price').val(''); 
-                $('#container').show();
             })
+
+
 
         $('ol').on('click',function(e){
              var targt = $(e.target)
              if($(targt).attr('name')=='remove'){
                  console.log('na em be this',);
                  let can = $(e.target.parentElement.parentElement.parentElement)
-                //  can.remove();
+                 can.remove();
                  let canPrice = can.find($('#added-price')).val();
                 //  $('#amt').val(`${parseInt(can.find($('#added-price')).val())- parseInt($('#amt').val())}`);
                 console.log(canPrice, 'na price be this')
