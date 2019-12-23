@@ -14,7 +14,6 @@
         
         #event-type{
             width:30%;
-            height:auto;
             box-shadow: 0px 8px 50px rgba(0, 0, 0, 0.12);
             border-radius: 8px;
             background: #ffffff;
@@ -56,9 +55,7 @@
             width:70%;
             text-align: center;
         }
-        #footer input{
-            
-        }
+       
         #footer button:hover{
             cursor:not-allowed;
         }
@@ -68,6 +65,7 @@
             margin:0 auto 30px auto;
             padding:20px;
             border-radius:4px;
+            height: 250px;
         }
         .type{
             font-family: IBM Plex Sans;
@@ -252,26 +250,49 @@
             </footer>
         </form>
     <script>
+        let events;
+        let prizes = [0];
+        let i = 0;
+        window.onload = function(){
+            let reloading = sessionStorage.getItem('events');
+            if(reloading){
+                sessionStorage.removeItem('events')
+            }
+        }
         
-         $('ol').on('click',function(e){
-            if($(e.target).attr('name')=='ar'){ 
-            console.log($(e.target).attr('name'),'this is the tag name')
-            $(e.target.parentElement.parentElement).find('.fa-chevron-up').toggle();
-            $(e.target.parentElement.parentElement).find('.fa-chevron-down').toggle();
-            $(e.target.parentElement.parentElement).find('.content').toggle()}
-        })
+        let createEventInSessionStorage =()=>{
+            let event = {};
+                event.category = `${$('#category').val()}`,
+                event.description = `${$('#description').val()}`;
+                event.price = `${$('#price').val()}`
+                if(sessionStorage.getItem('events') === null) {
+                    events = [];
+                }else{
+                    events = JSON.parse(sessionStorage.getItem('events'))  
+                };
+                events.push(event);
+                sessionStorage.setItem('events',JSON.stringify(events));
+        }
 
 
-        $('#menu-b').on('click',function(e){
-                e.preventDefault();
+        let mapEventsToScreen = async()=>{
+            let storedEvents = await JSON.parse(sessionStorage.getItem('events'));
+            console.log(storedEvents);
+            let total
+            if(storedEvents.length!==0){
+                console.log('there is total')
+                total = storedEvents.map(storedEvent => storedEvent.price).reduce((previousValue, currentValue) => {return parseInt(previousValue) + parseInt(currentValue) })
+            }else{ console.log('there is no total'); total=0;}
+            console.log('Total:',total) ;
+            $('#amt').val(`${total}`);
+            $('#crr').val(`${$('#currency').val()}`);
+            storedEvents.forEach(storedEvent=>{
+            console.log(storedEvent.price,'these are the prices')
 
-                if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
-                $('#amt').val(`${parseInt($('#amt').val())+parseInt($('#price').val())}`);
-                $('#crr').val(`${$('#currency').val()}`)
-                $('#storeTickets').append(`<li>
+                    $('#storeTickets').append(`<li>
                 <p id='limenu'>
                     <span>
-                        ${$('#category').val()}:${$('#currency').val()}${$('#price').val()}
+                        ${storedEvent.category}:${$('#currency').val()}${storedEvent.price}
                     </span>
                     
                         <i class="fas fa-chevron-up ar" name='ar'></i>
@@ -286,13 +307,13 @@
                     <sub name='remove' class="fas fa-minus-circle">   remove</sub>
                 </p>
                 <p>
-                    <input type="text" value='${$('#category').val()}'>
+                    <input type="text" value='${storedEvent.category}').val()}'>
                 </p>
                 <p>
                     Description
                 </p>
                 <p>
-                    <input type="text" value='${$('#description').val()}'>
+                    <input type="text" id='descripton' value='${storedEvent.description}' data-test="${storedEvent.description}">
                 </p>
                 <p>
                 Ticket price for this category?
@@ -305,31 +326,87 @@
                         <option value="₤">₤</option>
                         <option value="¥">¥</option>
                     </select>
-                    <input type="text" id='added-price' value='${$('#price').val()}'>
+                    <input type="text" id='added-price' value='${storedEvent.price}'>
                 </p>
             </div>
         </li>`) 
+
+                })
+        }
+
+
+        let clearInputs = ()=>{
+            $('#description').val('');
+            $('#category').val('');
+            $('#price').val(''); 
+        }
+
+
+        let removeEvent = (e) => {
+            storedEvents.forEach(storedEvent=> {
+             if(e.target.nextSibling.nodeValue==teacher.name && Teachers.indexOf(teacher)!==-1){
+            setTimeout(console.log,500,Teachers)
+            Teachers.splice(Teachers.indexOf(teacher),1);
+            e.target.parentElement.remove();
+        }
+        localStorage.setItem('Teachers',JSON.stringify(Teachers));
+    })
+    
+}
+
+         $('ol').on('click',function(e){
+            if($(e.target).attr('name')=='ar'){ 
+            console.log($(e.target).attr('name'),'this is the tag name')
+            $(e.target.parentElement.parentElement).find('.fa-chevron-up').toggle();
+            $(e.target.parentElement.parentElement).find('.fa-chevron-down').toggle();
+            $(e.target.parentElement.parentElement).find('.content').toggle()}
+        })
+
+
+        $('#menu-b').on('click',async function(e){
+                e.preventDefault();
+
+                if($('#description').val()!=''&&$('#category').val()!=''&&$('#price').val()!=''){ e.preventDefault();
+                $('#storeTickets').empty()
+                 
+
+                createEventInSessionStorage();
+                
+                
+                mapEventsToScreen();
+
+                
+                
+                
+                
+                clearInputs();
         } 
 
-                $('#description').val('');
-                $('#category').val('');
-                $('#price').val(''); 
+                
             })
 
 
 
-        $('ol').on('click',function(e){
+        $('ol').on('click',async function(e){
+            let descripton=document.querySelector('#descripton'). value
+           
              var targt = $(e.target)
              if($(targt).attr('name')=='remove'){
                  console.log('na em be this',);
-                 let can = $(e.target.parentElement.parentElement.parentElement)
-                 can.remove();
-                 let canPrice = can.find($('#added-price')).val();
-                //  $('#amt').val(`${parseInt(can.find($('#added-price')).val())- parseInt($('#amt').val())}`);
-                console.log(canPrice, 'na price be this')
-                console.log($('#amt').val(`${parseInt($('#amt').val())- parseInt(can.find($('#added-price')).val())}`), 'na new price be this')
+                 $('#storeTickets').empty();
+               let events = JSON.parse(sessionStorage.getItem('events'))
+               let can = $(e.target.parentElement.parentElement.parentElement);
+                events.forEach(event=> {
+                    if(can.has(event.description) && events.indexOf(event)!=-1){
+                    console.log('you are right')
+                    events.splice(events.indexOf(event),1);
+                    }
+                    sessionStorage.setItem('events',JSON.stringify(events));
+                    mapEventsToScreen();
+                })
              }
-        })    
+        })  
+
     </script>
 </body>
 </html>
